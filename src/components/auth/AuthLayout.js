@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 import React from 'react';
+import { darkModeVar, disableDarkMode, enableDarkMode } from '../../apollo';
+import { useReactiveVar } from '@apollo/client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 
 const Container = styled.div`
 	display: flex;
@@ -14,10 +18,21 @@ const Wrapper = styled.div`
 	width: 100%;
 `;
 
+const Footer = styled.div`margin-top: 20px;`;
+
+const DarkModeBtn = styled.div`cursor: pointer;`;
+
 function AuthLayout({ children }) {
+	const darkMode = useReactiveVar(darkModeVar);
+
 	return (
 		<Container>
 			<Wrapper>{children}</Wrapper>
+			<Footer>
+				<DarkModeBtn onClick={darkMode ? disableDarkMode : enableDarkMode}>
+					<FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
+				</DarkModeBtn>
+			</Footer>
 		</Container>
 	);
 }

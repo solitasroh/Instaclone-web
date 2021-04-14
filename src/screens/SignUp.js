@@ -51,7 +51,7 @@ function SignUp() {
 	// complete 되면 home 으로 redirect
 	const onCompleted = (data) => {
 		const { userName, password } = getValues();
-		const { createAccount: { ok, error } } = data;
+		const { createAccount: { ok } } = data;
 		console.log(ok);
 		if (!ok) {
 			return;
@@ -62,7 +62,7 @@ function SignUp() {
 	const [ createAccount, { loading } ] = useMutation(CREATE_ACCOUNT_MUTATION, {
 		onCompleted
 	});
-	const { register, handleSubmit, formState: { errors, isValid }, getValues, setError, clearErrors } = useForm({
+	const { register, handleSubmit, formState: { isValid }, getValues } = useForm({
 		mode: 'onChange'
 	});
 	const onSubmitValid = (data) => {
