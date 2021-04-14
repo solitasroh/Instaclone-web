@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import React from 'react';
 const SSeparator = styled.div`
 	margin: 20px 0px 30px 0px;
 	text-transform: uppercase;

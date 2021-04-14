@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BaseBox } from '../shared';
-
+import React from 'react';
 const Container = styled(BaseBox)`
     display: flex;
 	justify-content: center;
