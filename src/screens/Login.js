@@ -37,8 +37,8 @@ const LOGIN_MUTATION = gql`
 `;
 function Login() {
 	const location = useLocation();
-	console.log(location);
-	console.log("test");
+	// console.log(location);
+	// console.log("test");
 	const { register, handleSubmit, formState: {errors, isValid}, getValues, setError, clearErrors } = useForm({
 		mode: 'onChange',
 		defaultValues: { 
@@ -64,7 +64,7 @@ function Login() {
   });
 
 	const onSubmitValid = (data) => {
-		console.log(data);
+		//console.log(data);
 		if (loading) {
 			return;
 		}
@@ -78,7 +78,7 @@ function Login() {
 	const clearLoginError = () => {
 		clearErrors("result");
 	}
-	console.log(isValid); 
+	//console.log(isValid); 
 	return (
 		<AuthLayout>
 			<PageTitle title="Login" />
