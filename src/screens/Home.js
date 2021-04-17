@@ -14,7 +14,17 @@ const FEED_QUERY = gql`
 			file
 			caption
 			likes
-			comments
+			commentNumber
+			comments {
+				id
+				user {
+					userName
+					avatar
+				}
+				payload
+				isMine
+				createdAt
+			}
 			createdAt
 			isMine
 			isLiked
@@ -24,14 +34,17 @@ const FEED_QUERY = gql`
 
 function Home() {
 	const { data } = useQuery(FEED_QUERY);
+	const fetchPhotos = () => {
+		if (data != null && data.seeFeed != null) {
+			console.log(data);
+			return data.seeFeed.map((photo) => <Photo key={photo.id} {...photo} />);
+		}
+		return null;
+	};
 	return (
 		<div>
-			<PageTitle title="Home"/>
-			{
-				data?.seeFeed?.map(photo => <Photo key={photo.id} 
-					{...photo}
-					></Photo>)
-			}
+			<PageTitle title="Home" />
+			{fetchPhotos()}
 		</div>
 	);
 }
