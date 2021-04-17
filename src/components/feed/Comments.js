@@ -65,11 +65,28 @@ function Comments({ photoId, author, caption, commentNumber, comments }) {
 					...userData.me
 				}
 			};
+			// cache 안에 comment fragment 생성
+			const newFragment = cache.writeFragment({
+				data: newComment,
+				fragment: gql`
+					fragment BSName on Comment {
+						id
+						createdAt
+						isMine
+						payload
+						user {
+							userName
+							avatar
+						}
+					}
+				`
+			});
+			// fragment 를 comments 에 추가
 			cache.modify({
 				id: `Photo:${photoId}`,
 				fields: {
 					comments(prev) {
-						return [ ...prev, newComment ];
+						return [ ...prev, newFragment ];
 					},
 					commentNumber(prev) {
 						return prev + 1;
