@@ -39,10 +39,17 @@ const PostCommentInput = styled.input`
 	}
 `;
 
-const mapConmment = (comments) => {
+const mapConmment = (comments, photoId) => {
 	if (comments != null) {
 		return comments.map((comment) => (
-			<Comment key={comment.id} author={comment.user.userName} payload={comment.payload} />
+			<Comment
+				key={comment.id}
+				id={comment.id}
+				author={comment.user.userName}
+				payload={comment.payload}
+				isMine={comment.isMine}
+				photoId={photoId}
+			/>
 		));
 	}
 	return null;
@@ -115,7 +122,7 @@ function Comments({ photoId, author, caption, commentNumber, comments }) {
 		<CommentsContainer>
 			<Comment author={author} payload={caption} />
 			<CommentCount>{commentNumber <= 2 ? `댓글 ${commentNumber} 개` : `댓글 ${commentNumber} 개 모두보기`}</CommentCount>
-			{mapConmment(comments)}
+			{mapConmment(comments, photoId)}
 			<PostCommentContainer>
 				<form onSubmit={handleSubmit(onValid)}>
 					<PostCommentInput
