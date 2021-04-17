@@ -1,14 +1,13 @@
-import sanitizeHtml from 'sanitize-html';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import { FatText } from '../shared';
+import { Link } from 'react-router-dom';
 
 const CommentContainer = styled.div`margin-bottom: 10px;`;
 const CommentCaption = styled.span`
 	margin-left: 5px;
-	mark {
+	a {
 		background-color: inherit;
 		color: #03376a;
 		cursor: pointer;
@@ -17,11 +16,18 @@ const CommentCaption = styled.span`
 `;
 
 const replacePayload = (payload) => {
-	const regex = /#[\w]+/g;
-	const result = sanitizeHtml(payload.replace(regex, '<mark>$&</mark>'), {
-		allowedTags: [ 'mark' ]
-	});
-	console.log(result);
+	const regex = /#[\w]+/;
+
+	const result = payload.split(' ').map(
+		(word, index) =>
+			regex.test(word) ? (
+				<React.Fragment key={index}>
+					<Link to={`/hashtags/${word}`}>{word}</Link> {' '}
+				</React.Fragment>
+			) : (
+				<React.Fragment key={index}>{word} </React.Fragment>
+			)
+	);
 	return result;
 };
 
@@ -29,7 +35,7 @@ function Comment({ author, payload }) {
 	return (
 		<CommentContainer>
 			<FatText>{author}</FatText>
-			<CommentCaption dangerouslySetInnerHTML={{ __html: replacePayload(payload) }} />
+			<CommentCaption>{replacePayload(payload)}</CommentCaption>
 		</CommentContainer>
 	);
 }
