@@ -18,9 +18,7 @@ function useUser() {
 	});
 	console.log('useUser Data'+data);
     useEffect(() => {
-		console.log("useEffect")
         if (data?.me === null) {
-            console.log('logout!!!');
         	logUserOut();
         }
     }, [data]);

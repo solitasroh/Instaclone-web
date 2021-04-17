@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import NotFound from './screens/NotFound';
-import Header from './components/Header';
 import Layout from './components/Layout';
 import { isLoggedInVar, darkModeVar, client } from './apollo';
 import { ThemeProvider } from 'styled-components';
