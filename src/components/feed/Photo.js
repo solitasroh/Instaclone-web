@@ -67,7 +67,7 @@ const Likes = styled(FatText)`
 `;
 
 function Photo({ id, user, file, isLiked, likes, caption, commentNumber, comments }) {
-	const fragmentId = `Photo:${id}`;
+	const photoId = `Photo:${id}`;
 	const fragment = gql`
 		fragment BSNAME on Photo {
 			isLiked
@@ -79,12 +79,18 @@ function Photo({ id, user, file, isLiked, likes, caption, commentNumber, comment
 		const { data: { toggleLike: { ok } } } = result;
 		// read Fragment 를 써야 할까?
 		if (ok) {
-			cache.writeFragment({
-				id: fragmentId,
-				fragment,
-				data: {
-					isLiked: !isLiked,
-					likes: isLiked ? likes - 1 : likes + 1
+			cache.modify({
+				id: photoId,
+				fields: {
+					isLiked(prev) {
+						return !prev;
+					},
+					likes(prev) {
+						if (isLiked) {
+							return prev - 1;
+						}
+						return prev + 1;
+					}
 				}
 			});
 		}
