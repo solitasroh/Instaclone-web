@@ -9,6 +9,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
 import { FatText } from '../shared';
+import Comments from './Comments';
 
 const TOGGLE_LIKE_MUTATION = gql`
 	mutation toggleLike($id: Int!) {
@@ -65,16 +66,6 @@ const Likes = styled(FatText)`
 	display: block;
 `;
 
-const Comments = styled.div`margin-top: 20px;`;
-const Comment = styled.div``;
-const CommentCaption = styled.span`margin-left: 5px;`;
-const CommentCount = styled.span`
-	opacity: 0.5;
-	display: block;
-	margin: 10px 0px;
-	font-size: 13px;
-	font-weight: 600;
-`;
 function Photo({ id, user, file, isLiked, likes, caption, commentNumber, comments }) {
 	const fragmentId = `Photo:${id}`;
 	const fragment = gql`
@@ -134,19 +125,12 @@ function Photo({ id, user, file, isLiked, likes, caption, commentNumber, comment
 					</div>
 				</PhotoActions>
 				<Likes> {likes === 1 ? '1 like' : `${likes} likes`} </Likes>
-				<Comments>
-					<Comment>
-						<FatText>{user.userName}</FatText>
-						<CommentCaption>{caption}</CommentCaption>
-					</Comment>
-					<CommentCount>
-						{commentNumber < 2 ? `댓글 ${commentNumber} 개` : `댓글 ${commentNumber} 개 모두보기`}
-					</CommentCount>
-				</Comments>
+				<Comments author={user.userName} caption={caption} commentNumber={commentNumber} comments={comments} />
 			</PhotoData>
 		</PhotoContainer>
 	);
 }
+
 Photo.propTypes = {
 	id: PropTypes.number.isRequired,
 	user: PropTypes.shape({
@@ -157,7 +141,6 @@ Photo.propTypes = {
 	file: PropTypes.string.isRequired,
 	isLiked: PropTypes.bool.isRequired,
 	likes: PropTypes.number.isRequired,
-	commentNumber: PropTypes.number.isRequired,
-	comments: PropTypes.arrayOf(PropTypes.shape({}))
+	commentNumber: PropTypes.number.isRequired
 };
 export default Photo;
