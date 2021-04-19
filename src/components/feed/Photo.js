@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
 import { FatText } from '../shared';
@@ -104,8 +105,12 @@ function Photo({ id, user, file, isLiked, likes, caption, commentNumber, comment
 	return (
 		<PhotoContainer key={id}>
 			<PhotoHeader>
-				<Avatar url={user.avatar} lg />
-				<Username>{user.userName}</Username>
+				<Link to={`/users/${user.userName}`}>
+					<Avatar url={user.avatar} lg />
+				</Link>
+				<Link to={`/users/${user.userName}`}>
+					<Username>{user.userName}</Username>
+				</Link>
 			</PhotoHeader>
 			<PhotoFile src={file} />
 			<PhotoData>

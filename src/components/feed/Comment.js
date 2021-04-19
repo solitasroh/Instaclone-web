@@ -79,7 +79,9 @@ function Comment({ id, author, payload, isMine, photoId }) {
 	};
 	return (
 		<CommentContainer>
-			<FatText>{author}</FatText>
+			<Link to={`/users/${author}`}>
+				<FatText>{author}</FatText>
+			</Link>
 			<CommentCaption>{replacePayload(payload)}</CommentCaption>
 			{isMine ? <Button onClick={onDeleteClick}>❌</Button> : null}
 		</CommentContainer>
